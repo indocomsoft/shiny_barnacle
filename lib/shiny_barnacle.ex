@@ -97,8 +97,6 @@ defmodule ShinyBarnacle do
 
   @spec serialize_cookies(map()) :: String.t()
   def serialize_cookies(cookies) when is_map(cookies) do
-    cookies
-    |> Cookie.serialize()
-    |> String.replace(", ", "; ")
+    Cookie.serialize(cookies)
   end
 end
