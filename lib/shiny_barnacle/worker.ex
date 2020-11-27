@@ -24,18 +24,8 @@ defmodule ShinyBarnacle.Worker do
   @impl true
   def init(_) do
     state =
-      with {:ok, data} <- File.read("./#{@credential_file}"),
-           %{"username" => username, "password" => password} <- URI.decode_query(data) do
-        Logger.info("Credential file found, using username #{username}")
-        {username, password}
-      else
-        _ ->
-          Logger.error(
-            "Credential file cannot be used, please use `ShinyBarnacle.Worker.store_credential`"
-          )
-
-          nil
-      end
+      {Application.get_env(:shiny_barnacle, :username),
+       Application.get_env(:shiny_barnacle, :password)}
 
     Logger.info(
       "Worker started, will perform first submission after #{@interval_no_credential} ms"
@@ -43,11 +33,6 @@ defmodule ShinyBarnacle.Worker do
 
     Process.send_after(self(), :submit, @interval_no_credential)
     {:ok, state}
-  end
-
-  @impl true
-  def handle_call({:store, {username, password}}, _from, _state) do
-    {:reply, :ok, {username, password}}
   end
 
   @impl true
@@ -110,17 +95,5 @@ defmodule ShinyBarnacle.Worker do
 
   def start_link(_) do
     GenServer.start_link(__MODULE__, nil, name: __MODULE__)
-  end
-
-  @spec store_credential(String.t(), String.t()) :: :ok | no_return()
-  def store_credential(username, password, store_in_file \\ false)
-      when is_binary(username) and is_binary(password) and is_boolean(store_in_file) do
-    GenServer.call(__MODULE__, {:store, {username, password}})
-
-    if store_in_file do
-      data = URI.encode_query(%{"username" => username, "password" => password})
-      File.write!("./#{@credential_file}", data)
-      Logger.info("Stored credential in #{@credential_file}")
-    end
   end
 end
