@@ -25,7 +25,7 @@ defmodule ShinyBarnacle.MixProject do
       {:cookie, "~> 0.1.1"},
       {:httpoison, "~> 1.6"},
       {:nimble_strftime, "~> 0.1.0"},
-      {:tzdata, "~> 1.0.1"}
+      {:tzdata, "~> 1.1.0"}
       # {:dep_from_hexpm, "~> 0.3.0"},
       # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
     ]
