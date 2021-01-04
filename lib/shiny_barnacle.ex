@@ -50,7 +50,7 @@ defmodule ShinyBarnacle do
     end
   end
 
-  @spec submit(String.t(), number(), bool(), bool()) :: :ok | {:error, any()}
+  @spec submit(String.t(), number(), bool(), bool()) :: :ok | {:error, HTTPoison.Error.t()}
   def submit(cookie, temp, has_symptom \\ false, family_has_symptom \\ false)
       when is_number(temp) and is_boolean(has_symptom) and is_boolean(family_has_symptom) and
              is_binary(cookie) do
