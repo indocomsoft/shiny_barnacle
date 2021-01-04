@@ -7,7 +7,11 @@ defmodule ShinyBarnacle.MixProject do
       version: "0.1.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      dialyzer: [
+        plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
+        flags: [:error_handling, :race_conditions, :underspecs, :unmatched_returns]
+      ]
     ]
   end
 
