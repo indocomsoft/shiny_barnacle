@@ -1,4 +1,6 @@
 defmodule ShinyBarnacle.Worker do
+  @moduledoc "If you know, you know"
+
   @credential_file "cred.dat"
 
   # Retry every 10s to see if we have a credential now
@@ -69,7 +71,7 @@ defmodule ShinyBarnacle.Worker do
         [tomorrow_date <> "T#{am_start}+0800", tomorrow_date <> "T#{am_end}+0800"]
       end
       |> Enum.map(fn iso8601 ->
-        {:ok, utc_datetime, 28800} = DateTime.from_iso8601(iso8601)
+        {:ok, utc_datetime, 28_800} = DateTime.from_iso8601(iso8601)
         DateTime.to_unix(utc_datetime)
       end)
 
