@@ -1,8 +1,6 @@
 defmodule ShinyBarnacle.Worker do
   @moduledoc "If you know, you know"
 
-  @credential_file "cred.dat"
-
   # Retry every 10s to see if we have a credential now
   @interval_no_credential 10_000
 
@@ -15,7 +13,7 @@ defmodule ShinyBarnacle.Worker do
   # Range to submit in AM in ISO8601 format
   @am_range {"07:00:00", "11:59:59"}
   # Range to submit in PM in ISO8601 format
-  @pm_range {"12:00:00", "23:59:59"}
+  @pm_range {"12:00:00", "14:00:00"}
 
   use GenServer
 
