@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: mix
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "07:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: dialyxir
+    versions:
+    - 1.1.0
+  - dependency-name: credo
+    versions:
+    - 1.5.5
