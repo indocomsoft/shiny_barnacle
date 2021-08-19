@@ -56,11 +56,14 @@ defmodule ShinyBarnacle do
              is_binary(cookie) do
     now = DateTime.now!("Asia/Singapore")
 
+    formatted_date = NimbleStrftime.format(now, "%d/%m/%Y")
+
     data = %{
       "actionName" => "dlytemperature",
-      "tempDeclOn" => NimbleStrftime.format(now, "%d/%m/%Y"),
+      "webdriverFlag" => "",
+      "tempDeclOn" => formatted_date,
       "declFrequency" => now |> NimbleStrftime.format("%p") |> String.at(0),
-      "temperature" => temp,
+      # "temperature" => temp,
       "symptomsFlag" => if(has_symptom, do: "Y", else: "N"),
       "familySymptomsFlag" => if(family_has_symptom, do: "Y", else: "N")
     }
@@ -76,7 +79,12 @@ defmodule ShinyBarnacle do
 
     case HTTPoison.post(@submit_url, body, headers) do
       {:ok, %{status_code: 200, body: body}} ->
-        if String.contains?(body, "Listing"), do: :ok, else: {:error, body}
+        if String.contains?(body, "Health Status Declaration for") and
+             String.contains?(body, "S.No") and String.contains?(body, formatted_date) do
+          :ok
+        else
+          {:error, body}
+        end
 
       {:error, error} ->
         {:error, error}
