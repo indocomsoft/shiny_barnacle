@@ -27,7 +27,7 @@ defmodule ShinyBarnacle.MixProject do
   defp deps do
     [
       {:cookie, "~> 0.1.1"},
-      {:httpoison, "~> 1.6"},
+      {:httpoison, "~> 2.0"},
       {:nimble_strftime, "~> 0.1.0"},
       {:tzdata, "~> 1.0"},
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
